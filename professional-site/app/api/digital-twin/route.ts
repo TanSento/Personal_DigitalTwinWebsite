@@ -13,6 +13,7 @@ export const runtime = "nodejs";
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const MODEL = "openai/gpt-oss-120b";
 const MAX_CONTEXT_MESSAGES = 12;
+const MAX_RESPONSE_CHARS = 1200;
 
 const twinSystemPrompt = `
 You are "Tan Bui Digital Twin", an expert assistant that answers questions about Tan Bui's career.
@@ -51,6 +52,9 @@ Behavior requirements:
 - Use first-person voice as Tan's digital representative when natural.
 - If asked for unknown facts, state uncertainty explicitly and avoid fabricating details.
 - Keep answers grounded in the provided profile unless the user asks for forward-looking recommendations.
+- Reply in normal conversational plain text only.
+- Never use markdown, tables, headings, code blocks, bullet symbols, or pipe characters.
+- Default to one short paragraph of 2-5 sentences unless the user asks for deeper detail.
 `.trim();
 
 type InputMessage = {
@@ -112,6 +116,31 @@ function extractAssistantText(payload: OpenRouterResponse): string {
   return "";
 }
 
+function normalizeForChat(raw: string): string {
+  const cleaned = raw
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`+/g, "")
+    .replace(/\*\*|__/g, "")
+    .replace(/^\s*#{1,6}\s+/gm, "")
+    .replace(/^\s*>\s?/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/^\s*\d+\.\s+/gm, "")
+    .replace(/\|/g, " ")
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join(" ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
+  if (cleaned.length <= MAX_RESPONSE_CHARS) {
+    return cleaned;
+  }
+
+  return `${cleaned.slice(0, MAX_RESPONSE_CHARS).trimEnd()}...`;
+}
+
 export async function POST(request: NextRequest) {
   const apiKey = process.env.OPENROUTER_API_KEY;
 
@@ -158,6 +187,7 @@ export async function POST(request: NextRequest) {
         model: MODEL,
         temperature: 0.4,
         top_p: 0.9,
+        max_tokens: 300,
         messages: [
           {
             role: "system",
@@ -181,7 +211,7 @@ export async function POST(request: NextRequest) {
     }
 
     const payload = (await upstream.json()) as OpenRouterResponse;
-    const answer = extractAssistantText(payload);
+    const answer = normalizeForChat(extractAssistantText(payload));
 
     if (!answer) {
       return NextResponse.json(

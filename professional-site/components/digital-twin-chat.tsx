@@ -126,7 +126,7 @@ export function DigitalTwinChat() {
         {messages.map((message, index) => (
           <div
             key={`${message.role}-${index}`}
-            className={`max-w-[90%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+            className={`max-w-[90%] break-words whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm leading-relaxed ${
               message.role === "assistant"
                 ? "bg-cyan-400/10 text-slate-100"
                 : "ml-auto border border-cyan-300/25 bg-slate-800/80 text-cyan-100"
