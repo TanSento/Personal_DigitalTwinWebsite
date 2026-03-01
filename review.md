@@ -31,7 +31,7 @@ This is a well-structured Next.js (App Router) personal website with a GPT-power
 The OpenRouter API key is stored as a plain-text secret:
 
 ```
-OPENROUTER_API_KEY=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
+OPENROUTER_API_KEY=sk-or-v1-.....cf35
 ```
 
 Although `site/.gitignore` lists `.env` and the file is **not currently tracked** by git, this setup is fragile:
