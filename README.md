@@ -4,9 +4,9 @@ This tutorial explains, step by step, how this project was built and how each pa
 
 ---
 
-## 1) What You Built
+## 1) What Has Been Built
 
-You now have a modern personal website built with Next.js that includes:
+This is modern personal website built with Next.js that includes:
 
 - A premium landing page with sections like About, Career Journey, Projects, and Credentials
 - A "Digital Twin" chat box where visitors can ask questions about your background
