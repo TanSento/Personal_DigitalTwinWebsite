@@ -1,8 +1,8 @@
 # Comprehensive Code Review
 
-**Project:** Tan Bui Professional Website + Digital Twin Chat
-**Date:** 2 March 2026
-**Reviewer:** Antigravity AI - Opus 4.6
+**Project:** Tan Bui Professional Website + Digital Twin Chat\
+**Date:** 2 March 2026\
+**Reviewer:** Antigravity AI - Opus 4.6\
 **Scope:** All source files in `site/` and `site/professional-site/`
 
 ---
