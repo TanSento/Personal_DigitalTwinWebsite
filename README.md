@@ -370,3 +370,5 @@ Your API key must exist in:
 ---
 
 If you want, the next tutorial can be "How to add streaming AI responses in Next.js App Router (beginner version)".
+
+Coding Assistant Agent: GPT 5.3 Codex High
