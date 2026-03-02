@@ -2,6 +2,9 @@
 
 This tutorial explains, step by step, how this project was built and how each part works. It is written for complete beginners to frontend coding.
 
+Coding Assistant Agent: GPT 5.3 Codex High
+
+
 ---
 
 ## 1) What Has Been Built
@@ -371,4 +374,3 @@ Your API key must exist in:
 
 If you want, the next tutorial can be "How to add streaming AI responses in Next.js App Router (beginner version)".
 
-Coding Assistant Agent: GPT 5.3 Codex High
